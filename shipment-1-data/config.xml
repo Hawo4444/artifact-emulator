@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <broker>
+        <host>localhost</host>
+        <port>1883</port>
+        <user>admin</user>
+        <password>password</password>
+    </broker>
+    <artifact>
+        <name>Train</name>
+        <id>train-1</id>
+        <stream-file-path></stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </artifact>
+    <artifact>
+        <name>Train</name>
+        <id>train-2</id>
+        <stream-file-path></stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </artifact>
+    <artifact>
+        <name>Ship</name>
+        <id>ship-1</id>
+        <stream-file-path></stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </artifact>
+    <stakeholder>
+        <name>Carrier</name>
+        <process-instance>c1</process-instance>
+        <stream-file-path></stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </stakeholder>
+    <stakeholder>
+        <name>Shipper</name>
+        <process-instance>s1</process-instance>
+        <stream-file-path></stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </stakeholder>
+</configuration>
