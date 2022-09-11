@@ -1,18 +1,17 @@
-var mqtt = require('./modules/mqttconnector')
-var LOG = require('./modules/LogManager')
 var xml2js = require('xml2js');
 var fs = require('fs');
-const { time } = require('console');
+
+var mqtt = require('./modules/mqttconnector')
+var LOG = require('./modules/LogManager')
 
 module.id = "MAIN"
 
-var artifacts = []
-var stakeholders = []
-
-var events = new Map() //artifact/stakeholder name -> [event]
+//Global variables
+var entities = new Map() //Defined entites in the config file which are capable to event emitting {artifact or stakeholder name} -> {details}
+var events = new Map() //Future events defined in the stream files (each event corresponds one line){artifact or stakeholder name} -> [{event}]
+var config = undefined //System config
 
 var parseString = xml2js.parseString;
-var config = undefined
 
 //Reading config file
 try {
@@ -30,40 +29,59 @@ try {
     LOG.logSystem('DEBUG', `Error while reading initialization file: ${err}`, module.id)
     return
 }
-//Add brokers
 
 //Add artifacts
+LOG.logSystem('DEBUG', 'Adding artifacts', module.id)
 var artifactsbuff = config['configuration']['artifact']
 for (var a in artifactsbuff) {
-    artifacts[a] = {
+    var key = artifactsbuff[a]['name'][0] + '/' + artifactsbuff[a]['id'][0]
+    if (entities.has(key)) {
+        LOG.logSystem('ERROR', 'Same Artifact Name and ID used twice', module.id)
+        throw 'Same Artifact Name and ID used twice'
+    }
+    entities.set(key, {
+        type: 'artifacts',
         name: artifactsbuff[a]['name'][0],
         id: artifactsbuff[a]['id'][0],
         host: artifactsbuff[a]['host'][0],
         port: artifactsbuff[a]['port'][0],
         file: artifactsbuff[a]['stream-file-path'][0]
-    }
-    events.set(artifacts[a].name + '/' + artifacts[a].id, [])
+    })
+    events.set(key, [])
 }
+
 //Add stakeholder
+LOG.logSystem('DEBUG', 'Adding stakeholders', module.id)
 var stakeholdersbuff = config['configuration']['stakeholder']
 for (var s in stakeholdersbuff) {
-    stakeholders[s] = {
+    var key = stakeholdersbuff[s]['name'][0] + '/' + stakeholdersbuff[s]['process-instance'][0]
+    if (entities.has(key)) {
+        LOG.logSystem('ERROR', 'Same Stakeholder Name and ID used twice', module.id)
+        throw 'Same Stakeholder Name and ID used twice'
+    }
+    entities.set(key, {
+        type: 'stakeholder',
         name: stakeholdersbuff[s]['name'][0],
         process_instance: stakeholdersbuff[s]['process-instance'][0],
         host: stakeholdersbuff[s]['host'][0],
         port: stakeholdersbuff[s]['port'][0],
         file: stakeholdersbuff[s]['stream-file-path'][0]
-    }
+    })
+    events.set(key, [])
 }
+
 //Set up brokers
+LOG.logSystem('DEBUG', 'Adding brokers', module.id)
 var brokers = config['configuration']['broker']
 for (var b in brokers) {
     mqtt.createConnection(brokers[b].host[0], brokers[b].port[0], brokers[b].user[0], brokers[b].password[0], 'emulator-' + Math.random().toString(16).substr(2, 8))
 }
 
 //Open stream files and fill up events array
-for (var a in artifacts) {
-    const file = fs.readFileSync(artifacts[a].file, 'utf8');
+LOG.logSystem('DEBUG', 'Reading stream files and organizing events', module.id)
+entities.forEach((value, key) => {
+    var file = fs.readFileSync(value.file, 'utf8');
+    file = file.replaceAll('\r\n', '\n')
     var lines = file.split('\n')
     for (var l in lines) {
         var lineelements = lines[l].split(';')
@@ -82,13 +100,17 @@ for (var a in artifacts) {
             datanames: datanames,
             datas: datas
         }
-        events.get(artifacts[a].name + '/' + artifacts[a].id).push(event)
+        events.get(key).push(event)
     }
-}
+})
 
 //Function to register an event in the future
-function registerTimeout(topic, event) {
-    timeouts.push(setTimeout(function () {
+function registerTimeout(entityname, event) {
+    setTimeout(function () {
+        var topic = entityname
+        if (entities.get(entityname).type == 'artifact') {
+            topic += '/status'
+        }
         var time = Math.floor(Date.now() / 1000);
         var payloadData = { timestamp: time }
         //iterate through attributes of event
@@ -96,19 +118,18 @@ function registerTimeout(topic, event) {
             payloadData[event.datanames[a]] = event.datas[a]
         }
         var eventstr = `{"event": {"payloadData":` + JSON.stringify(payloadData) + `}}`
-        //mqtt.publishTopic(topic)
-        console.log(`${topic} -> ${eventstr}`)
-    }, event.time));
+        mqtt.publishTopic(entities.get(entityname).host, entities.get(entityname).port, topic, eventstr)
+        LOG.logSystem('DEBUG', `Emitting event: [${topic}] -> [${eventstr}]`, module.id)
+    }, event.time);
 }
 
 
 //iterate through all artifacts/stakeholders
+LOG.logSystem('DEBUG', 'Creating future events', module.id)
 events.forEach((value, key) => {
     //iterate through all events of the artifact
     for (var e in value) {
         //Set timeout and perform publication to the topic
-        var topic = key + '/status'
-        var event = value[e]
-        registerTimeout(topic, event)
+        registerTimeout(key, value[e])
     }
 });
