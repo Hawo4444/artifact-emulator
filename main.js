@@ -40,7 +40,7 @@ for (var a in artifactsbuff) {
         throw 'Same Artifact Name and ID used twice'
     }
     entities.set(key, {
-        type: 'artifacts',
+        type: 'artifact',
         name: artifactsbuff[a]['name'][0],
         id: artifactsbuff[a]['id'][0],
         host: artifactsbuff[a]['host'][0],
@@ -108,11 +108,11 @@ entities.forEach((value, key) => {
 function registerTimeout(entityname, event) {
     setTimeout(function () {
         var topic = entityname
+        var payloadData = {}
         if (entities.get(entityname).type == 'artifact') {
             topic += '/status'
+            payloadData['timestamp'] = Math.floor(Date.now() / 1000)
         }
-        var time = Math.floor(Date.now() / 1000);
-        var payloadData = { timestamp: time }
         //iterate through attributes of event
         for (a in event.datanames) {
             payloadData[event.datanames[a]] = event.datas[a]
