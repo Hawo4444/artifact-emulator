@@ -15,7 +15,7 @@
     </artifact>
     <artifact>
         <name>Truck</name>
-        <id>2345</id>
+        <id>98765</id>
         <stream-file-path>shipment-1-data/truck-1-uncompliant.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
@@ -23,7 +23,7 @@
     <stakeholder>
         <name>Shipper</name>
         <process-instance>s1</process-instance>
-        <stream-file-path>shipment-1-data/shipper.csv</stream-file-path>
+        <stream-file-path>shipment-1-data/shipper1.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </stakeholder>
