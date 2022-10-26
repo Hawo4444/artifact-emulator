@@ -1,8 +1,8 @@
 var xml2js = require('xml2js');
 var fs = require('fs');
 
-var mqtt = require('./modules/mqttconnector')
-var LOG = require('./modules/LogManager')
+var mqtt = require('./modules/egsm-common/communication/mqttconnector')
+var LOG = require('./modules/egsm-common/auxiliary/logManager')
 
 module.id = "MAIN"
 

@@ -1,0 +1,3 @@
+[submodule "modules/egsm-common"]
+	path = modules/egsm-common
+	url = https://github.com/szabolcsgarda/egsm-common.git
