@@ -8,7 +8,7 @@
     </broker>
     <artifact>
         <name>Truck</name>
-        <id>12345</id>
+        <id>a1</id>
         <stream-file-path>shipment-1-data/truck-1-compliant.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
@@ -20,18 +20,48 @@
         <host>localhost</host>
         <port>1883</port>
     </artifact>
+
     <stakeholder>
         <name>Shipper</name>
-        <process-instance>s1</process-instance>
+        <process-instance>a1</process-instance>
+        <stream-file-path>shipment-1-data/shipper2.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </stakeholder>
+    <stakeholder>
+        <name>Shipper</name>
+        <process-instance>a2</process-instance>
         <stream-file-path>shipment-1-data/shipper1.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </stakeholder>
     <stakeholder>
         <name>Shipper</name>
-        <process-instance>s2</process-instance>
-        <stream-file-path>shipment-1-data/shipper2.csv</stream-file-path>
+        <process-instance>a3</process-instance>
+        <stream-file-path>shipment-1-data/shipper1.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </stakeholder>
+    <stakeholder>
+        <name>Shipper</name>
+        <process-instance>a4</process-instance>
+        <stream-file-path>shipment-1-data/shipper1.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </stakeholder>
+    <stakeholder>
+        <name>Shipper</name>
+        <process-instance>a5</process-instance>
+        <stream-file-path>shipment-1-data/shipper1.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </stakeholder>
+    <stakeholder>
+        <name>Shipper</name>
+        <process-instance>a6</process-instance>
+        <stream-file-path>shipment-1-data/shipper1.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </stakeholder>
+    
 </configuration>

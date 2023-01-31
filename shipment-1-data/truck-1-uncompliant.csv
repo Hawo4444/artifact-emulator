@@ -1,9 +1,9 @@
 2000;status;LhrStill
-5000;status;LhrMoving
-8000;status;HwGBMoving
-15000;status;HwGBStill
+10000;status;LhrMoving
 20000;status;HwGBMoving
-22000;status;HwGBStill
-25000;status;HwGBMoving
-27000;status;HwGBStill
-30000;status;HwMoving
+25000;status;HwGBStill
+30000;status;HwGBMoving
+36000;status;HwGBStill
+42000;status;HwGBMoving
+46000;status;HwGBStill
+51000;status;HwMoving
