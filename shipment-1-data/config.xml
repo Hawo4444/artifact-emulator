@@ -9,59 +9,213 @@
     <artifact>
         <name>Truck</name>
         <id>a1</id>
-        <stream-file-path>shipment-1-data/truck-1-compliant.csv</stream-file-path>
+        <stream-file-path>shipment-1-data/LHR-AMS/01-LHR-AMS-compliant.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </artifact>
     <artifact>
         <name>Truck</name>
-        <id>98765</id>
-        <stream-file-path>shipment-1-data/truck-1-uncompliant.csv</stream-file-path>
+        <id>a2</id>
+        <stream-file-path>shipment-1-data/LHR-AMS/02-LHR-AMS-compliant.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </artifact>
+    <artifact>
+        <name>Truck</name>
+        <id>a3</id>
+        <stream-file-path>shipment-1-data/LHR-AMS/03-LHR-AMS-compliant.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </artifact>
+    <artifact>
+        <name>Truck</name>
+        <id>a4</id>
+        <stream-file-path>shipment-1-data/LHR-AMS/04-LHR-AMS-compliant.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </artifact>
+    <artifact>
+        <name>Truck</name>
+        <id>a5</id>
+        <stream-file-path>shipment-1-data/LHR-AMS/05-LHR-AMS-compliant.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </artifact>
+    <artifact>
+        <name>Truck</name>
+        <id>a6</id>
+        <stream-file-path>shipment-1-data/LHR-AMS/06-LHR-AMS-compliant.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </artifact>
+    <artifact>
+        <name>Truck</name>
+        <id>a7</id>
+        <stream-file-path>shipment-1-data/LHR-AMS/07-LHR-AMS-compliant.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </artifact>
+    <artifact>
+        <name>Truck</name>
+        <id>a8</id>
+        <stream-file-path>shipment-1-data/LHR-AMS/08-LHR-AMS-compliant.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </artifact>
+    <artifact>
+        <name>Truck</name>
+        <id>a9</id>
+        <stream-file-path>shipment-1-data/LHR-AMS/09-LHR-AMS-compliant.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </artifact>
+    <artifact>
+        <name>Truck</name>
+        <id>a10</id>
+        <stream-file-path>shipment-1-data/LHR-AMS/10-LHR-AMS-uncompliant.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </artifact>
+    <artifact>
+        <name>Truck</name>
+        <id>a11</id>
+        <stream-file-path>shipment-1-data/LHR-AMS/11-LHR-AMS-compliant.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </artifact>
+    <artifact>
+        <name>Truck</name>
+        <id>a12</id>
+        <stream-file-path>shipment-1-data/LHR-AMS/12-LHR-AMS-compliant.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </artifact>
+    <artifact>
+        <name>Truck</name>
+        <id>a13</id>
+        <stream-file-path>shipment-1-data/LHR-AMS/13-LHR-AMS-compliant.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </artifact>
+    <artifact>
+        <name>Truck</name>
+        <id>a14</id>
+        <stream-file-path>shipment-1-data/LHR-AMS/14-LHR-AMS-uncompliant.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </artifact>
+    <artifact>
+        <name>Truck</name>
+        <id>a15</id>
+        <stream-file-path>shipment-1-data/LHR-AMS/15-LHR-AMS-uncompliant.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </artifact>
 
     <stakeholder>
         <name>Shipper</name>
-        <process-instance>a1</process-instance>
-        <stream-file-path>shipment-1-data/shipper2.csv</stream-file-path>
+        <process-instance>p1</process-instance>
+        <stream-file-path>shipment-1-data/LHR-AMS/01-LHR-AMS-shipper.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </stakeholder>
     <stakeholder>
         <name>Shipper</name>
-        <process-instance>a2</process-instance>
-        <stream-file-path>shipment-1-data/shipper1.csv</stream-file-path>
+        <process-instance>p2</process-instance>
+        <stream-file-path>shipment-1-data/LHR-AMS/02-LHR-AMS-shipper.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </stakeholder>
     <stakeholder>
         <name>Shipper</name>
-        <process-instance>a3</process-instance>
-        <stream-file-path>shipment-1-data/shipper1.csv</stream-file-path>
+        <process-instance>p3</process-instance>
+        <stream-file-path>shipment-1-data/LHR-AMS/03-LHR-AMS-shipper.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </stakeholder>
     <stakeholder>
         <name>Shipper</name>
-        <process-instance>a4</process-instance>
-        <stream-file-path>shipment-1-data/shipper1.csv</stream-file-path>
+        <process-instance>p4</process-instance>
+        <stream-file-path>shipment-1-data/LHR-AMS/04-LHR-AMS-shipper.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </stakeholder>
     <stakeholder>
         <name>Shipper</name>
-        <process-instance>a5</process-instance>
-        <stream-file-path>shipment-1-data/shipper1.csv</stream-file-path>
+        <process-instance>p5</process-instance>
+        <stream-file-path>shipment-1-data/LHR-AMS/05-LHR-AMS-shipper.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </stakeholder>
     <stakeholder>
         <name>Shipper</name>
-        <process-instance>a6</process-instance>
-        <stream-file-path>shipment-1-data/shipper1.csv</stream-file-path>
+        <process-instance>p6</process-instance>
+        <stream-file-path>shipment-1-data/LHR-AMS/06-LHR-AMS-shipper.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </stakeholder>
-    
+    <stakeholder>
+        <name>Shipper</name>
+        <process-instance>p7</process-instance>
+        <stream-file-path>shipment-1-data/LHR-AMS/07-LHR-AMS-shipper.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </stakeholder>
+    <stakeholder>
+        <name>Shipper</name>
+        <process-instance>p8</process-instance>
+        <stream-file-path>shipment-1-data/LHR-AMS/08-LHR-AMS-shipper.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </stakeholder>
+    <stakeholder>
+        <name>Shipper</name>
+        <process-instance>p9</process-instance>
+        <stream-file-path>shipment-1-data/LHR-AMS/09-LHR-AMS-shipper.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </stakeholder>
+    <stakeholder>
+        <name>Shipper</name>
+        <process-instance>p10</process-instance>
+        <stream-file-path>shipment-1-data/LHR-AMS/10-LHR-AMS-shipper.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </stakeholder>
+    <stakeholder>
+        <name>Shipper</name>
+        <process-instance>p11</process-instance>
+        <stream-file-path>shipment-1-data/LHR-AMS/11-LHR-AMS-shipper.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </stakeholder>
+    <stakeholder>
+        <name>Shipper</name>
+        <process-instance>p12</process-instance>
+        <stream-file-path>shipment-1-data/LHR-AMS/12-LHR-AMS-shipper.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </stakeholder>
+    <stakeholder>
+        <name>Shipper</name>
+        <process-instance>p13</process-instance>
+        <stream-file-path>shipment-1-data/LHR-AMS/13-LHR-AMS-shipper.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </stakeholder>
+    <stakeholder>
+        <name>Shipper</name>
+        <process-instance>p14</process-instance>
+        <stream-file-path>shipment-1-data/LHR-AMS/14-LHR-AMS-shipper.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </stakeholder>
+    <stakeholder>
+        <name>Shipper</name>
+        <process-instance>p15</process-instance>
+        <stream-file-path>shipment-1-data/LHR-AMS/15-LHR-AMS-shipper.csv</stream-file-path>
+        <host>localhost</host>
+        <port>1883</port>
+    </stakeholder>
+
 </configuration>
