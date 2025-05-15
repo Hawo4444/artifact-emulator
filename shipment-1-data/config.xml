@@ -179,7 +179,7 @@
     <artifact>
         <name>Truck</name>
         <id>a25</id>
-        <stream-file-path>shipment-1-data/AMS-LHR/10-AMS-LHR-uncompliant.csv</stream-file-path>
+        <stream-file-path>shipment-1-data/AMS-LHR/10-AMS-LHR-compliant.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </artifact>
@@ -193,7 +193,7 @@
     <artifact>
         <name>Truck</name>
         <id>a27</id>
-        <stream-file-path>shipment-1-data/AMS-LHR/12-AMS-LHR-compliant.csv</stream-file-path>
+        <stream-file-path>shipment-1-data/AMS-LHR/12-AMS-LHR-uncompliant.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </artifact>
