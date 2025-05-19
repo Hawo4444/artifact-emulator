@@ -7,6 +7,7 @@
         <password>password</password>
     </broker>
 
+    <!-- LHR-AMS -->
     <artifact>
         <name>Truck</name>
         <id>a1</id>
@@ -113,6 +114,7 @@
         <port>1883</port>
     </artifact>
 
+    <!-- AMS-LHR -->
     <artifact>
         <name>Truck</name>
         <id>a16</id>
@@ -198,6 +200,7 @@
         <port>1883</port>
     </artifact>
 
+    <!-- AMS-BRU -->
     <artifact>
         <name>Truck</name>
         <id>a28</id>
@@ -262,6 +265,7 @@
         <port>1883</port>
     </artifact>
 
+    <!-- BRU-AMS -->
     <artifact>
         <name>Truck</name>
         <id>a37</id>
@@ -340,6 +344,7 @@
         <port>1883</port>
     </artifact>
 
+    <!-- AMS-CDG -->
     <artifact>
         <name>Truck</name>
         <id>a48</id>
@@ -397,6 +402,7 @@
         <port>1883</port>
     </artifact>
 
+    <!-- CDG-AMS -->
     <artifact>
         <name>Truck</name>
         <id>a56</id>
@@ -468,6 +474,7 @@
         <port>1883</port>
     </artifact>
 
+    <!-- AMS-FRA -->
     <artifact>
         <name>Truck</name>
         <id>a66</id>
@@ -497,6 +504,7 @@
         <port>1883</port>
     </artifact>
 
+    <!-- FRA-AMS -->
     <artifact>
         <name>Truck</name>
         <id>a70</id>
