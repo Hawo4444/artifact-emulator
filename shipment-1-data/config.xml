@@ -74,7 +74,7 @@
     <artifact>
         <name>Truck</name>
         <id>a10</id>
-        <stream-file-path>shipment-1-data/LHR-AMS/10-LHR-AMS-uncompliant.csv</stream-file-path>
+        <stream-file-path>shipment-1-data/LHR-AMS/10-LHR-AMS-compliant.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </artifact>
@@ -1023,6 +1023,7 @@
         <port>1883</port>
     </stakeholder>
 
+    <!-- AMS-FRA -->
     <stakeholder>
         <name>Shipper</name>
         <process-instance>p66</process-instance>
@@ -1052,6 +1053,7 @@
         <port>1883</port>
     </stakeholder>
 
+    <!-- FRA-AMS -->
     <stakeholder>
         <name>Shipper</name>
         <process-instance>p70</process-instance>
