@@ -139,7 +139,7 @@
     <artifact>
         <name>Truck</name>
         <id>a19</id>
-        <stream-file-path>shipment-1-data/AMS-LHR/04-AMS-LHR-uncompliant.csv</stream-file-path>
+        <stream-file-path>shipment-1-data/AMS-LHR/04-AMS-LHR-compliant.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </artifact>
@@ -188,7 +188,7 @@
     <artifact>
         <name>Truck</name>
         <id>a26</id>
-        <stream-file-path>shipment-1-data/AMS-LHR/11-AMS-LHR-uncompliant.csv</stream-file-path>
+        <stream-file-path>shipment-1-data/AMS-LHR/11-AMS-LHR-compliant.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </artifact>
@@ -204,7 +204,7 @@
     <artifact>
         <name>Truck</name>
         <id>a28</id>
-        <stream-file-path>shipment-1-data/AMS-BRU/01-AMS-BRU-uncompliant.csv</stream-file-path>
+        <stream-file-path>shipment-1-data/AMS-BRU/01-AMS-BRU-compliant.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </artifact>
@@ -218,7 +218,7 @@
     <artifact>
         <name>Truck</name>
         <id>a30</id>
-        <stream-file-path>shipment-1-data/AMS-BRU/03-AMS-BRU-uncompliant.csv</stream-file-path>
+        <stream-file-path>shipment-1-data/AMS-BRU/03-AMS-BRU-compliant.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </artifact>
@@ -253,14 +253,14 @@
     <artifact>
         <name>Truck</name>
         <id>a35</id>
-        <stream-file-path>shipment-1-data/AMS-BRU/08-AMS-BRU-uncompliant.csv</stream-file-path>
+        <stream-file-path>shipment-1-data/AMS-BRU/08-AMS-BRU-compliant.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </artifact>
     <artifact>
         <name>Truck</name>
         <id>a36</id>
-        <stream-file-path>shipment-1-data/AMS-BRU/09-AMS-BRU-uncompliant.csv</stream-file-path>
+        <stream-file-path>shipment-1-data/AMS-BRU/09-AMS-BRU-compliant.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </artifact>
@@ -269,7 +269,7 @@
     <artifact>
         <name>Truck</name>
         <id>a37</id>
-        <stream-file-path>shipment-1-data/BRU-AMS/01-BRU-AMS-uncompliant.csv</stream-file-path>
+        <stream-file-path>shipment-1-data/BRU-AMS/01-BRU-AMS-compliant.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </artifact>
@@ -283,7 +283,7 @@
     <artifact>
         <name>Truck</name>
         <id>a39</id>
-        <stream-file-path>shipment-1-data/BRU-AMS/03-BRU-AMS-uncompliant.csv</stream-file-path>
+        <stream-file-path>shipment-1-data/BRU-AMS/03-BRU-AMS-compliant.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </artifact>
@@ -297,7 +297,7 @@
     <artifact>
         <name>Truck</name>
         <id>a41</id>
-        <stream-file-path>shipment-1-data/BRU-AMS/05-BRU-AMS-uncompliant.csv</stream-file-path>
+        <stream-file-path>shipment-1-data/BRU-AMS/05-BRU-AMS-compliant.csv</stream-file-path>
         <host>localhost</host>
         <port>1883</port>
     </artifact>
