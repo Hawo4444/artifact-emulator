@@ -3,7 +3,7 @@ const fs = require('fs');
 const WebSocket = require('ws');
 const mqtt = require('./modules/egsm-common/communication/mqttconnector');
 const LOG = require('./modules/egsm-common/auxiliary/logManager');
-const performanceTracker = require('./modules/egsm-common/monitoring/performance-tracker');
+const performanceTracker = require('./modules/egsm-common/monitoring/performance-tracking');
 
 module.id = "MAIN";
 
