@@ -1,9 +1,11 @@
+process.env.EGSM_COMPONENT_ID = 'emulator';
+
 const xml2js = require('xml2js');
 const fs = require('fs');
 const WebSocket = require('ws');
 const mqtt = require('./modules/egsm-common/communication/mqttconnector');
 const LOG = require('./modules/egsm-common/auxiliary/logManager');
-const performanceTracker = require('./modules/egsm-common/monitoring/performance-tracking');
+const performanceTracker = require('./modules/egsm-common/monitoring/performanceTracker');
 
 module.id = "MAIN";
 
@@ -30,24 +32,14 @@ function parseCommandLineArgs() {
 
     for (let i = 3; i < process.argv.length; i++) {
         if (process.argv[i] === '--process-type') {
-            if (selectedInstances.length > 0) {
-                LOG.logSystem('ERROR', 'Cannot use --process-type and --instance together', module.id);
-                process.exit(1);
-            }
-
-            if (process.argv[i + 1] && !process.argv[i + 1].startsWith('--')) {
+            if (i + 1 < process.argv.length) {
                 targetProcessTypes = process.argv[i + 1].split(',');
-                i++;
+                i++; // Skip the next argument as it's the value
             }
         } else if (process.argv[i] === '--instance') {
-            if (targetProcessTypes.length > 0) {
-                LOG.logSystem('ERROR', 'Cannot use --process-type and --instance together', module.id);
-                process.exit(1);
-            }
-
-            if (process.argv[i + 1] && !process.argv[i + 1].startsWith('--')) {
+            if (i + 1 < process.argv.length) {
                 selectedInstances = process.argv[i + 1].split(',');
-                i++;
+                i++; // Skip the next argument as it's the value
             }
         }
     }
@@ -59,14 +51,11 @@ function parseCommandLineArgs() {
         // Extract all instances of specified process types from config
         const stakeholders = config.configuration.stakeholder || [];
         for (const stakeholder of stakeholders) {
-            const path = stakeholder['stream-file-path'][0];
-            const parts = path.split('/');
-
-            if (parts.length >= 2) {
-                const processType = parts[1];
-                if (targetProcessTypes.includes(processType)) {
-                    selectedInstances.push(stakeholder['process-instance'][0]);
-                }
+            const processInstance = stakeholder['process-instance'][0];
+            const processType = processInstance.split('/')[0]; // Extract process type
+            
+            if (targetProcessTypes.includes(processType)) {
+                selectedInstances.push(processInstance);
             }
         }
 
@@ -95,10 +84,11 @@ function loadConfig() {
 
         xml2js.parseString(data, (err, result) => {
             if (err) {
-                LOG.logSystem('ERROR', `Error parsing configuration file: ${err}`, module.id);
+                LOG.logSystem('ERROR', `Error parsing configuration: ${err}`, module.id);
                 process.exit(1);
             }
             config = result;
+            LOG.logSystem('DEBUG', 'Configuration parsed successfully', module.id);
         });
     } catch (err) {
         LOG.logSystem('ERROR', `Error reading configuration file: ${err}`, module.id);
@@ -277,31 +267,26 @@ function registerTimeout(entityName, event) {
             payloadData[event.datanames[i]] = event.datas[i];
         }
 
-        const eventStr = JSON.stringify({
-            event: { payloadData: payloadData }
+        // Generate unique event ID
+        const eventId = `${entityName}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+        // Record emulator event
+        performanceTracker.recordEvent(eventId, 'emulator_sent', {
+            entityName: entityName,
+            processInstance: entity.process_instance,
+            topic: topic,
+            eventData: payloadData
         });
 
-        // START PERFORMANCE TRACKING HERE
-        const correlationId = performanceTracker.trackEmulatorEvent(
-            entityName,
-            entity.process_instance,
-            {
-                topic: topic,
-                eventData: payloadData,
-                originalEvent: event
-            }
-        );
-
-        // Add correlation ID to the event payload for tracking through the system
-        const eventWithTracking = JSON.stringify({
+        const eventStr = JSON.stringify({
             event: {
                 payloadData: payloadData,
-                _correlationId: correlationId  // Add this for downstream tracking
+                _eventId: eventId  // Add event ID for downstream tracking
             }
         });
 
-        mqtt.publishTopic(entity.host, entity.port, topic, eventWithTracking);
-        LOG.logSystem('DEBUG', `Emitted event with tracking: [${topic}] -> ${correlationId}`, module.id);
+        mqtt.publishTopic(entity.host, entity.port, topic, eventStr);
+        LOG.logSystem('DEBUG', `Emitted event: [${topic}] -> ${eventId}`, module.id);
     }, event.time);
 }
 
@@ -473,91 +458,30 @@ async function createProcessInstances() {
     });
 }
 
-// Function to get current performance statistics
-function getPerformanceStats() {
-    return performanceTracker.getStatistics();
-}
-
-// Function to export all performance data
-function exportPerformanceData(filename = null) {
-    const data = performanceTracker.exportData();
-
-    if (filename) {
-        const fs = require('fs');
-        fs.writeFileSync(filename, JSON.stringify(data, null, 2));
-        LOG.logSystem('INFO', `Performance data exported to ${filename}`, module.id);
-    }
-
-    return data;
-}
-
-// Function to reset performance tracking (useful between test runs)
-function resetPerformanceTracking() {
-    performanceTracker.reset();
-    LOG.logSystem('INFO', 'Performance tracking reset', module.id);
-}
-
-// Add graceful shutdown handler to export data before exit
 process.on('SIGINT', () => {
     LOG.logSystem('INFO', 'Shutting down emulator...', module.id);
 
-    // Export performance data before exit
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const filename = `performance-data-${timestamp}.json`;
-    exportPerformanceData(filename);
-
-    // Print summary stats
-    const stats = getPerformanceStats();
-    console.log('\n=== PERFORMANCE SUMMARY ===');
-    console.log(`Total Events: ${stats.summary.totalEvents}`);
-    console.log(`Completed: ${stats.summary.completedTraces}`);
-    console.log(`Incomplete: ${stats.summary.incompleteTraces}`);
-    console.log(`Completion Rate: ${stats.summary.completionRate}%`);
-
-    if (stats.detectionDelays) {
-        console.log(`Median Detection Delay: ${stats.detectionDelays.median}ms`);
-        console.log(`95th Percentile Delay: ${stats.detectionDelays.p95}ms`);
-    }
+    // Export performance data
+    performanceTracker.exportToFile();
 
     process.exit(0);
 });
 
-// Add command line option to export data on demand
-if (process.argv.includes('--export-performance')) {
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const filename = `performance-export-${timestamp}.json`;
-    exportPerformanceData(filename);
-    console.log('Performance data exported. Exiting...');
-    process.exit(0);
-}
-
 // Main function
 async function main() {
     try {
-        // Load configuration
+        LOG.logSystem('INFO', 'Starting emulator...', module.id);
         loadConfig();
-
-        // Parse command line arguments
         parseCommandLineArgs();
-
-        // Setup entities based on selected instances
-        setupEntities();
-
-        // Create process instances
-        await createProcessInstances();
-
-        // Setup MQTT brokers
         setupBrokers();
-
-        // Read stream files
+        setupEntities();
         readStreamFiles();
-
-        // Schedule events
+        await createProcessInstances();
         setupEvents();
-
-        LOG.logSystem('INFO', 'Emulation setup complete', module.id);
+        LOG.logSystem('INFO', 'Emulator started successfully', module.id);
     } catch (err) {
-        LOG.logSystem('ERROR', `Error in main execution: ${err}`, module.id);
+        LOG.logSystem('ERROR', `Error starting emulator: ${err}`, module.id);
+        process.exit(1);
     }
 }
 
