@@ -268,10 +268,10 @@ function registerTimeout(entityName, event) {
         }
 
         // Generate unique event ID
-        const eventId = `${entityName}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        const correlationId = `${entityName}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
         // Record emulator event
-        performanceTracker.recordEvent(eventId, 'emulator_sent', {
+        performanceTracker.recordEvent(correlationId, 'emulator_sent', {
             entityName: entityName,
             processInstance: entity.process_instance,
             topic: topic,
@@ -281,12 +281,12 @@ function registerTimeout(entityName, event) {
         const eventStr = JSON.stringify({
             event: {
                 payloadData: payloadData,
-                _eventId: eventId  // Add event ID for downstream tracking
+                _correlationId: correlationId  // Add event ID for downstream tracking
             }
         });
 
         mqtt.publishTopic(entity.host, entity.port, topic, eventStr);
-        LOG.logSystem('DEBUG', `Emitted event: [${topic}] -> ${eventId}`, module.id);
+        LOG.logSystem('DEBUG', `Emitted event: [${topic}] -> ${correlationId}`, module.id);
     }, event.time);
 }
 
