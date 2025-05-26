@@ -51,11 +51,12 @@ function parseCommandLineArgs() {
         // Extract all instances of specified process types from config
         const stakeholders = config.configuration.stakeholder || [];
         for (const stakeholder of stakeholders) {
-            const processInstance = stakeholder['process-instance'][0];
-            const processType = processInstance.split('/')[0]; // Extract process type
+            const processFile = stakeholder['stream-file-path'][0];
+            LOG.logSystem('DEBUG', `Instance: `, stakeholder[0]);
+            const processType = processFile.split('/')[1];
             
             if (targetProcessTypes.includes(processType)) {
-                selectedInstances.push(processInstance);
+                selectedInstances.push(stakeholder['process-instance'][0]);
             }
         }
 
