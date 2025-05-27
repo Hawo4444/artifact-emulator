@@ -1,11 +1,8 @@
-process.env.EGSM_COMPONENT_ID = 'emulator';
-
 const xml2js = require('xml2js');
 const fs = require('fs');
 const WebSocket = require('ws');
 const mqtt = require('./modules/egsm-common/communication/mqttconnector');
 const LOG = require('./modules/egsm-common/auxiliary/logManager');
-const performanceTracker = require('./modules/egsm-common/monitoring/performanceTracker');
 
 module.id = "MAIN";
 
@@ -52,7 +49,6 @@ function parseCommandLineArgs() {
         const stakeholders = config.configuration.stakeholder || [];
         for (const stakeholder of stakeholders) {
             const processFile = stakeholder['stream-file-path'][0];
-            LOG.logSystem('DEBUG', `Instance: `, stakeholder[0]);
             const processType = processFile.split('/')[1];
             
             if (targetProcessTypes.includes(processType)) {
@@ -268,26 +264,12 @@ function registerTimeout(entityName, event) {
             payloadData[event.datanames[i]] = event.datas[i];
         }
 
-        // Generate unique event ID
-        const correlationId = `${entityName}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-
-        // Record emulator event
-        performanceTracker.recordEvent(correlationId, 'emulator_sent', {
-            entityName: entityName,
-            processInstance: entity.process_instance,
-            topic: topic,
-            eventData: payloadData
-        });
-
         const eventStr = JSON.stringify({
-            event: {
-                payloadData: payloadData,
-                _correlationId: correlationId  // Add event ID for downstream tracking
-            }
+            event: { payloadData: payloadData }
         });
 
         mqtt.publishTopic(entity.host, entity.port, topic, eventStr);
-        LOG.logSystem('DEBUG', `Emitted event: [${topic}] -> ${correlationId}`, module.id);
+        LOG.logSystem('DEBUG', `Emitted event: [${topic}] -> ${eventStr}`, module.id);
     }, event.time);
 }
 
@@ -459,15 +441,6 @@ async function createProcessInstances() {
     });
 }
 
-process.on('SIGINT', () => {
-    LOG.logSystem('INFO', 'Shutting down emulator...', module.id);
-
-    // Export performance data
-    performanceTracker.exportToFile();
-
-    process.exit(0);
-});
-
 // Main function
 async function main() {
     try {
@@ -482,7 +455,6 @@ async function main() {
         LOG.logSystem('INFO', 'Emulator started successfully', module.id);
     } catch (err) {
         LOG.logSystem('ERROR', `Error starting emulator: ${err}`, module.id);
-        process.exit(1);
     }
 }
 
